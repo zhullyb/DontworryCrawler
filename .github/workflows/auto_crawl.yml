@@ -22,6 +22,9 @@ jobs:
       - name: Get Current Date
         run: |
           echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+      - name: Install beautifulsoup4
+        run: |
+          pip install beautifulsoup4
       - name: Run Crawler
         run: |
             python dontworry_crawler.py
