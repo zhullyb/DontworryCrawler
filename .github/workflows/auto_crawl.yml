@@ -1,0 +1,32 @@
+name: Auto Crawl
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Download latest release
+        uses: robinraju/release-downloader@v1.9
+        with:
+          latest: true
+          fileName: dontworry.txt
+      - name: Get Current Date
+        run: |
+          echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+      - name: Run Crawler
+        run: |
+            python dontworry_crawler.py
+      - name: Do Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: dontworry*.txt
+          tag: ${{ env.CURRENT_DATE }}
