@@ -29,7 +29,7 @@ if __name__ == '__main__':
                 originlist.append(line)
 
     search(url)
-    out = filter(lambda x: x.startswith('没关系'), iter(set(templist + originlist)))
+    out = filter(lambda x: x.startswith('没关系') and len(x) > 4, iter(set(templist + originlist)))
 
     with open('dontworry.txt', 'w') as f:
         f.writelines(out)
